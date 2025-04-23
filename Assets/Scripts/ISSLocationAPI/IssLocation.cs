@@ -6,7 +6,27 @@ namespace ISSLocationAPI
 {
     public class IssLocation : MonoBehaviour
     {
+        [SerializeField] private LatLonAltToUnity latLonAltToUnity;
         private string _issData;
+
+        [System.Serializable]
+        public class IssData
+        {
+            public string name;
+            public int id;
+            public float latitude;
+            public float longitude;
+            public float altitude;
+            public float velocity;
+            public string visibility;
+            public float footprint;
+            public long timestamp;
+            public double daynum;
+            public float solarLat;
+            public float solarLon;
+            public string units;
+        }
+
 
         private void Start()
         {
@@ -25,7 +45,8 @@ namespace ISSLocationAPI
                     if (request.result == UnityWebRequest.Result.Success)
                     {
                         _issData = request.downloadHandler.text;
-                        Debug.Log(_issData);
+                        GetLongLatAlt();
+                        // Debug.Log(_issData);
                     }
                     else
                     {
@@ -35,6 +56,20 @@ namespace ISSLocationAPI
 
                 yield return waitTime;
             }
+        }
+
+        private void GetLongLatAlt()
+        {
+            if (string.IsNullOrEmpty(_issData))
+                return;
+
+            var issData = JsonUtility.FromJson<IssData>(_issData);
+
+            var latitude = issData.latitude;
+            var longitude = issData.longitude;
+            var altitude = issData.altitude;
+
+            latLonAltToUnity.IssToUnity(latitude, longitude, altitude);
         }
     }
 }
