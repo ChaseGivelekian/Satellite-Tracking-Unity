@@ -5,8 +5,15 @@ namespace ISSLocationAPI
 {
     public class LatLonAltToUnity : MonoBehaviour
     {
+        [SerializeField] private GameObject earth;
+
         // Radius of the Earth sphere in your Unity scene (adjust as needed)
-        public float earthRadius = 6371f; // Approximate average radius in kilometers
+        public float earthRadius; // Approximate average radius in kilometers
+
+        private void Start()
+        {
+            earthRadius = earth.GetComponent<SphereCollider>().radius;
+        }
 
         // Function to convert latitude, longitude, and altitude to a Unity position
         private Vector3 ConvertLatLonAltToUnityPosition(double latitude, double longitude, double altitude)
@@ -46,16 +53,12 @@ namespace ISSLocationAPI
             // Convert the coordinates to a Unity position
             var issPosition = ConvertLatLonAltToUnityPosition(latitude, longitude, altitude);
 
-            // Create a GameObject to represent the ISS (optional)
-            var issObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            issObject.name = "ISS";
-
             // Set the position of the ISS object relative to the Earth sphere
             // Assuming your Earth sphere is at the origin (0, 0, 0)
-            issObject.transform.position = issPosition;
+            gameObject.transform.position = issPosition;
 
             // You might want to scale down the ISS object for visualization
-            issObject.transform.localScale = Vector3.one * 0.1f; // Example scaling
+            // gameObject.transform.localScale = Vector3.one * 0.1f; // Example scaling
 
             Debug.Log("ISS Unity Position: " + issPosition);
         }
