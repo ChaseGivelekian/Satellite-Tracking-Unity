@@ -2,12 +2,11 @@ using UnityEngine;
 
 namespace CameraController
 {
-    public class CameraController : MonoBehaviour
+    public class EarthCameraController : MonoBehaviour
     {
         [Header("Target")] public Transform earthTransform;
 
-        [Header("Initial Camera Setup")]
-        public float initialDistance;
+        [Header("Initial Camera Setup")] public float initialDistance;
 
         [Header("Orbit Settings")] public float orbitSpeed = 50f;
         private float _minDistance;
@@ -70,7 +69,8 @@ namespace CameraController
                 // Rotate the camera around the Earth based on mouse movement
                 transform.RotateAround(earthTransform.position, transform.right,
                     -mouseDelta.y * orbitSpeed * Time.deltaTime);
-                transform.RotateAround(earthTransform.position, Vector3.up, mouseDelta.x * orbitSpeed * Time.deltaTime);
+                transform.RotateAround(earthTransform.position, Vector3.up,
+                    mouseDelta.x * orbitSpeed * Time.deltaTime);
 
                 _lastMousePosition = currentMousePosition;
             }

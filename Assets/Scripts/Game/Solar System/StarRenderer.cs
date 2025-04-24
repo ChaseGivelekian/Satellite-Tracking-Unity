@@ -1,24 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
+using SolarSystem;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace SolarSystem
+namespace Game.Solar_System
 {
 	public class StarRenderer : MonoBehaviour
 	{
+		private static readonly int Data = Shader.PropertyToID("StarData");
+		private static readonly int Size = Shader.PropertyToID("size");
+		private static readonly int BrightnessMultiplier = Shader.PropertyToID("brightnessMultiplier");
+		private static readonly int RotationMatrix = Shader.PropertyToID("rotationMatrix");
 		public SolarSystemManager solarSystemManager;
 		public Shader starInstanceShader;
 		public Light sun;
 		//public Vector3 testParams;
 		public float size;
-		Material starMaterial;
+		private Material _starMaterial;
 
 
-		Mesh quadMesh;
-		ComputeBuffer argsBuffer;
-		ComputeBuffer starDataBuffer;
-		Camera cam;
+		private Mesh _quadMesh;
+		private ComputeBuffer _argsBuffer;
+		private ComputeBuffer _starDataBuffer;
+		private Camera _cam;
 
 		public float brightnessMultiplier;
 		public float appearTimeMin;
@@ -30,85 +33,81 @@ namespace SolarSystem
 
 		public void SetUpStarRenderingCommand(CommandBuffer cmd)
 		{
-			if (Application.isPlaying)
-			{
-				cam = Camera.main;
+			if (!Application.isPlaying) return;
 
-				//stars = loader.LoadStars();
-				CreateQuadMesh();
-				EditorOnlyInit();
+			_cam = Camera.main;
 
-				starMaterial = new Material(starInstanceShader);
+			//stars = loader.LoadStars();
+			CreateQuadMesh();
+			EditorOnlyInit();
 
-				ComputeHelper.Release(argsBuffer, starDataBuffer);
-				argsBuffer = ComputeHelper.CreateArgsBuffer(quadMesh, starData.NumStars);
+			_starMaterial = new Material(starInstanceShader);
 
-				starDataBuffer = ComputeHelper.CreateStructuredBuffer(starData.Stars);
+			ComputeHelper.Release(_argsBuffer, _starDataBuffer);
+			_argsBuffer = ComputeHelper.CreateArgsBuffer(_quadMesh, starData.NumStars);
+
+			_starDataBuffer = ComputeHelper.CreateStructuredBuffer(starData.Stars);
 
 
-				SetBuffer();
+			SetBuffer();
 
-				cmd.DrawMeshInstancedIndirect(quadMesh, 0, starMaterial, 0, argsBuffer, 0);
-
-			}
+			cmd.DrawMeshInstancedIndirect(_quadMesh, 0, _starMaterial, 0, _argsBuffer, 0);
 		}
 
-		void SetBuffer()
+		private void SetBuffer()
 		{
-			starMaterial.SetBuffer("StarData", starDataBuffer);
+			_starMaterial.SetBuffer(Data, _starDataBuffer);
 		}
 
 
 		public void UpdateFixedStars(EarthOrbit earth, bool geocentric)
 		{
-			if (Application.isPlaying)//
+			if (!Application.isPlaying) return;
+			_starMaterial.SetFloat(Size, size);
+			_starMaterial.SetFloat(BrightnessMultiplier, brightnessMultiplier);
+			var rotMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, Vector3.one);
+			// Earth remains stationary and without rotation, so rotate the stars instead
+			if (geocentric)
 			{
-				starMaterial.SetFloat("size", size);
-				starMaterial.SetFloat("brightnessMultiplier", brightnessMultiplier);
-				Matrix4x4 rotMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, Vector3.one);
-				// Earth remains stationary and without rotation, so rotate the stars instead
-				if (geocentric)
-				{
-					rotMatrix = Matrix4x4.Rotate(Quaternion.Inverse(earth.earthRot));
-				}
-
-				starMaterial.SetMatrix("rotationMatrix", rotMatrix);
-
-
-				//bounds.center = cam.transform.position;
-				//Graphics.DrawMeshInstancedIndirect(quadMesh, 0, starMaterial, bounds, argsBuffer, castShadows: ShadowCastingMode.Off, receiveShadows: false);
-				//Graphics.DrawMeshInstanced(quadMesh, 0, starInstanceShader,)//
+				rotMatrix = Matrix4x4.Rotate(Quaternion.Inverse(earth.earthRot));
 			}
+
+			_starMaterial.SetMatrix(RotationMatrix, rotMatrix);
+
+
+			//bounds.center = cam.transform.position;
+			//Graphics.DrawMeshInstancedIndirect(quadMesh, 0, starMaterial, bounds, argsBuffer, castShadows: ShadowCastingMode.Off, receiveShadows: false);
+			//Graphics.DrawMeshInstanced(quadMesh, 0, starInstanceShader,)//
 		}
 
 
-		void CreateQuadMesh()
+		private void CreateQuadMesh()
 		{
-			quadMesh = new Mesh();
+			_quadMesh = new Mesh();
 
 			Vector3[] vertices = {
-			new Vector3(-1,-1), // bottom left
-			new Vector3(1,-1), // bottom right
-			new Vector3(1,1), // top left
-			new Vector3(-1, 1) // top right
+			new(-1,-1), // bottom left
+			new(1,-1), // bottom right
+			new(1,1), // top left
+			new(-1, 1) // top right
 		};
 
 			int[] triangles = { 0, 2, 1, 0, 3, 2 };
 
-			quadMesh.SetVertices(vertices);
-			quadMesh.SetTriangles(triangles, 0, true);
+			_quadMesh.SetVertices(vertices);
+			_quadMesh.SetTriangles(triangles, 0, true);
 		}
 
-		void OnDestroy()
+		private void OnDestroy()
 		{
-			ComputeHelper.Release(argsBuffer, starDataBuffer);
+			ComputeHelper.Release(_argsBuffer, _starDataBuffer);
 		}
 
-		void EditorOnlyInit()
+		private void EditorOnlyInit()
 		{
 #if UNITY_EDITOR
-			EditorShaderHelper.onRebindRequired += () => SetBuffer();
+			EditorShaderHelper.onRebindRequired += SetBuffer;
 #endif
-		}//
+		}
 	}
 }

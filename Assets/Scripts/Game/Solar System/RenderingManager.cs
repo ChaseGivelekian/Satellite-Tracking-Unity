@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.Solar_System;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -7,7 +8,7 @@ using UnityEngine.Rendering;
 public class RenderingManager : MonoBehaviour
 {
 
-	public SolarSystem.StarRenderer starRenderer;
+	public StarRenderer starRenderer;
 	public AtmosphereEffect atmosphereEffect;
 
 	bool atmosphereActive;
