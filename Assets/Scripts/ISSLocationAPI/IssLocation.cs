@@ -7,6 +7,7 @@ namespace ISSLocationAPI
     public class IssLocation : MonoBehaviour
     {
         [SerializeField] private LatLonAltToUnity latLonAltToUnity;
+        [SerializeField] private float updateInterval = 1.0f; // Time between API calls
         private string _issData;
 
         [System.Serializable]
@@ -27,7 +28,6 @@ namespace ISSLocationAPI
             public string units;
         }
 
-
         private void Start()
         {
             StartCoroutine(GetIssData());
@@ -35,7 +35,8 @@ namespace ISSLocationAPI
 
         private IEnumerator GetIssData()
         {
-            var waitTime = new WaitForSecondsRealtime(1.0f);
+            var waitTime = new WaitForSecondsRealtime(updateInterval);
+
             while (true)
             {
                 using (var request = UnityWebRequest.Get("https://api.wheretheiss.at/v1/satellites/25544"))
@@ -45,8 +46,7 @@ namespace ISSLocationAPI
                     if (request.result == UnityWebRequest.Result.Success)
                     {
                         _issData = request.downloadHandler.text;
-                        GetLongLatAlt();
-                        // Debug.Log(_issData);
+                        GetLonLatAlt();
                     }
                     else
                     {
@@ -58,7 +58,7 @@ namespace ISSLocationAPI
             }
         }
 
-        private void GetLongLatAlt()
+        private void GetLonLatAlt()
         {
             if (string.IsNullOrEmpty(_issData))
                 return;
