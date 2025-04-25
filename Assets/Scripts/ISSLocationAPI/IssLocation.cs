@@ -6,6 +6,7 @@ namespace ISSLocationAPI
 {
     public class IssLocation : MonoBehaviour
     {
+        [SerializeField] private Transform sun;
         [SerializeField] private LatLonAltToUnity latLonAltToUnity;
         [SerializeField] private float updateInterval = 1.0f; // Time between API calls
         private string _issData;
@@ -31,6 +32,18 @@ namespace ISSLocationAPI
         private void Start()
         {
             StartCoroutine(GetIssData());
+        }
+
+        private void Update()
+        {
+            if (!sun)
+            {
+                Debug.LogError("Sun transform not assigned to IssLocation!");
+                enabled = false;
+                return;
+            }
+
+            transform.LookAt(sun);
         }
 
         private IEnumerator GetIssData()
