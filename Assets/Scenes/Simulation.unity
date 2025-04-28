@@ -466,12 +466,12 @@ GameObject:
   - component: {fileID: 1799222570}
   - component: {fileID: 1799222569}
   - component: {fileID: 1799222572}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Test Earth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!23 &1799222569
 MeshRenderer:
@@ -695,7 +695,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   issTransform: {fileID: 1816644054}
   orbitSpeed: 100
-  initialDistance: 50
+  initialDistance: 100
   minZoomDistance: 25
   maxZoomDistance: 150
   zoomSpeed: 10
@@ -703,7 +703,7 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1799222571}
-  - {fileID: 1239291650}
   - {fileID: 1245399548}
   - {fileID: 379658958}
+  - {fileID: 1799222571}
+  - {fileID: 1239291650}

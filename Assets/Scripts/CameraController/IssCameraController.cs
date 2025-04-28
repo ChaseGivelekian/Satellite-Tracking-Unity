@@ -4,12 +4,10 @@ namespace CameraController
 {
     public class IssCameraController : MonoBehaviour
     {
-        [Header("Target")] 
-        public Transform issTransform;
+        [Header("Target")] public Transform issTransform;
 
-        [Header("Orbit Settings")] 
-        public float orbitSpeed = 50f;
-        public float initialDistance = 10f;
+        [Header("Orbit Settings")] public float orbitSpeed = 50f;
+        public float initialDistance;
         public float minZoomDistance = 5f;
         public float maxZoomDistance = 30f;
         public float zoomSpeed = 2f;
@@ -39,7 +37,7 @@ namespace CameraController
 
             // Set the initial distance
             _currentDistance = initialDistance;
-            
+
             // Initialize camera position
             UpdateCameraPosition();
         }
@@ -75,7 +73,7 @@ namespace CameraController
                     mouseDelta.x * orbitSpeed * Time.deltaTime);
 
                 _lastMousePosition = currentMousePosition;
-                
+
                 // Store the current offset direction after rotation
                 _offsetDirection = (transform.position - issTransform.position).normalized;
             }
@@ -84,8 +82,9 @@ namespace CameraController
             var scrollDelta = Input.mouseScrollDelta.y;
             if (scrollDelta != 0)
             {
-                _currentDistance = Mathf.Clamp(_currentDistance - scrollDelta * zoomSpeed, minZoomDistance, maxZoomDistance);
-                
+                _currentDistance = Mathf.Clamp(_currentDistance - scrollDelta * zoomSpeed, minZoomDistance,
+                    maxZoomDistance);
+
                 // Store the current offset direction if we haven't been orbiting
                 if (!_isOrbiting)
                 {
@@ -100,7 +99,7 @@ namespace CameraController
         private void UpdateCameraPosition()
         {
             if (!issTransform) return;
-            
+
             // If we don't have an offset direction yet, initialize it
             if (_offsetDirection == Vector3.zero)
             {
@@ -113,7 +112,7 @@ namespace CameraController
                 // Position the camera based on the current offset direction and distance
                 transform.position = issTransform.position + _offsetDirection * _currentDistance;
             }
-            
+
             // Always look at the ISS
             transform.LookAt(issTransform);
         }

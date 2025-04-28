@@ -7,7 +7,10 @@ namespace ISSLocationAPI
     public class LatLonAltToUnity : MonoBehaviour
     {
         [SerializeField] private GameObject earth;
-        private float _earthRadius;
+        private static float _earthRadius;
+
+        private const double E = 8.1819190842622e-2;
+        private static readonly double Esq = Math.Pow(E, 2);
 
         private Vector3 _startPosition;
         private Vector3 _targetPosition;
@@ -22,35 +25,36 @@ namespace ISSLocationAPI
             _startPosition = transform.position;
         }
 
-        private Vector3 ConvertLatLonAltToUnityPosition(double latitude, double longitude, double altitude)
+        private static Vector3 ConvertLatLonAltToUnityPosition(double latitude, double longitude, double altitude)
         {
-            // Convert latitude and longitude to radians
-            var latitudeRad = Math.PI * latitude / 180.0;
-            var longitudeRad = Math.PI * longitude / 180.0;
-            
-            // Add altitude to the Earth's radius to get the distance from the center
-            var distance = _earthRadius + altitude;
-            
-            // In Unity's coordinate system:
-            // - X is east-west
-            // - Y is up-down
-            // - Z is north-south
+            var lat = latitude * Mathf.Deg2Rad;
+            var lon = longitude * Mathf.Deg2Rad;
 
-            // Calculate coordinates:
-            // Unity coordinates need proper orientation adjustment
-            // For a typical Earth representation in Unity:
+            var n = _earthRadius / Math.Sqrt(1 - Esq * Math.Pow(Math.Sin(lat), 2));
 
-            // X-axis -> -longitude (east is negative, west is positive)
-            var x = (float)(distance * Math.Cos(latitudeRad) * Math.Sin(longitudeRad));
+            var x = (n + altitude) * Math.Cos(lat) * Math.Cos(lon);
+            var z = (n + altitude) * Math.Cos(lat) * Math.Sin(lon);
+            var y = ((1 - Esq) * n + altitude) * Math.Sin(lat);
 
-            // Y-axis -> latitude (north is positive, south is negative)
-            var y = (float)(distance * Math.Sin(latitudeRad));
+            return new Vector3((float)x, (float)y, (float)z);
 
-            // Z axis -> longitude (North Pole facing camera)
-            var z = (float)(-distance * Math.Cos(latitudeRad) * Math.Cos(longitudeRad));
-            
-            // Return the Unity Vector3 position
-            return new Vector3(x, y, z);
+            // // Convert latitude and longitude to radians
+            // var latitudeRad = latitude * Mathf.Deg2Rad;
+            // var longitudeRad = longitude * Mathf.Deg2Rad;
+            //
+            // // Add altitude to the Earth's radius to get the distance from the center
+            // var distance = _earthRadius + altitude;
+            //
+            // // In Unity's coordinate system:
+            // // - X is east-west
+            // // - Y is up-down
+            // // - Z is north-south
+            //
+            // var x = (float)(distance * Math.Cos(latitudeRad) * Math.Sin(longitudeRad));
+            // var y = (float)(distance * Math.Sin(latitudeRad));
+            // var z = (float)(-distance * Math.Cos(latitudeRad) * Math.Cos(longitudeRad));
+            //
+            // return new Vector3(x, y, z);
         }
 
         // Method to move the object smoothly over exactly 1 second
