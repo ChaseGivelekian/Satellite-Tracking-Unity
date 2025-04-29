@@ -68,30 +68,30 @@
         {
             // Get normalized direction to the light source
             float3 dirToSun = normalize(_WorldSpaceLightPos0.xyz);
-            
+
             // Sample base textures first
             fixed4 dayColor = tex2D(_DayTex, IN.uv_DayTex) * _Color;
             fixed4 nightColor = tex2D(_NightTex, IN.uv_DayTex) * _Color;
-            
+
             // Sample cloud texture with animation
             float2 cloudUV = IN.uv_DayTex;
             cloudUV.x = frac(cloudUV.x + _Time.y * _CloudSpeed); // Animate clouds horizontally with wrapping
             fixed4 cloudColor = tex2D(_CloudTex, cloudUV);
-            
+
             // Sample both normal maps
             fixed3 landNormal = UnpackNormal(tex2D(_BumpMap, IN.uv_BumpMap));
             fixed3 oceanNormal = UnpackNormal(tex2D(_OceanBumpMap, IN.uv_BumpMap));
-            
+
             // Apply scales to the normal maps
             landNormal.xy *= _BumpScale;
             oceanNormal.xy *= _OceanBumpScale;
-            
+
             // This works because where one map has no detail (is flat), it won't affect the other map's details
             fixed3 combinedNormal;
             combinedNormal.xy = landNormal.xy + oceanNormal.xy;
             combinedNormal.z = 1.0;
             combinedNormal = normalize(combinedNormal);
-            
+
             o.Normal = combinedNormal;
 
             // Get world normal (now affected by the combined normal map)
@@ -103,10 +103,10 @@
 
             // Create a smooth transition from night to day
             float dayFactor = saturate((sunDot + 0.1) * _TransitionSharpness);
-            
+
             // Blend between night and day based on the light direction
             o.Albedo = lerp(nightColor.rgb, dayColor.rgb, dayFactor);
-            
+
             // Add clouds with more visibility on the day side
             float cloudAlpha = cloudColor.a * _CloudStrength * (0.3 + 0.7 * dayFactor);
             o.Albedo = lerp(o.Albedo, cloudColor.rgb, cloudAlpha);

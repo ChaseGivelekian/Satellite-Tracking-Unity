@@ -53,8 +53,8 @@ Shader "Custom/Ocean"
 			#include "UnityLightingCommon.cginc"
 			#include "AutoLight.cginc"
 
-			#include "Assets/Scripts/Shader Common/GeoMath.hlsl"
-			#include "Assets/Scripts/Shader Common/Triplanar.hlsl"
+			#include "Assets/Scripts/Shaders/Common/GeoMath.hlsl"
+			#include "Assets/Scripts/Shaders/Common/Triplanar.hlsl"
 
 			struct appdata
 			{
