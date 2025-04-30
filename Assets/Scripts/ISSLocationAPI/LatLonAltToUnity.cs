@@ -25,7 +25,7 @@ namespace ISSLocationAPI
             _startPosition = transform.position;
         }
 
-        private static Vector3 ConvertLatLonAltToUnityPosition(double latitude, double longitude, double altitude)
+        private Vector3 ConvertLatLonAltToUnityPosition(double latitude, double longitude, double altitude)
         {
             var lat = latitude * Mathf.Deg2Rad;
             var lon = longitude * Mathf.Deg2Rad;
@@ -36,25 +36,15 @@ namespace ISSLocationAPI
             var z = (n + altitude) * Math.Cos(lat) * Math.Sin(lon);
             var y = ((1 - Esq) * n + altitude) * Math.Sin(lat);
 
-            return new Vector3((float)x, (float)y, (float)z);
+            var position = new Vector3((float)x, (float)y, (float)z);
 
-            // // Convert latitude and longitude to radians
-            // var latitudeRad = latitude * Mathf.Deg2Rad;
-            // var longitudeRad = longitude * Mathf.Deg2Rad;
-            //
-            // // Add altitude to the Earth's radius to get the distance from the center
-            // var distance = _earthRadius + altitude;
-            //
-            // // In Unity's coordinate system:
-            // // - X is east-west
-            // // - Y is up-down
-            // // - Z is north-south
-            //
-            // var x = (float)(distance * Math.Cos(latitudeRad) * Math.Sin(longitudeRad));
-            // var y = (float)(distance * Math.Sin(latitudeRad));
-            // var z = (float)(-distance * Math.Cos(latitudeRad) * Math.Cos(longitudeRad));
-            //
-            // return new Vector3(x, y, z);
+            // Apply Earth's rotation to the calculated position
+            if (earth)
+            {
+                position = earth.transform.rotation * position;
+            }
+
+            return position;
         }
 
         // Method to move the object smoothly over exactly 1 second
