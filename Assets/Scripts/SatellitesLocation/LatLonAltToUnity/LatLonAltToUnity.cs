@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace ISSLocationAPI
+namespace SatellitesLocation.LatLonAltToUnity
 {
     public class LatLonAltToUnity : MonoBehaviour
     {

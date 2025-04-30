@@ -2,12 +2,12 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace ISSLocationAPI
+namespace SatellitesLocation.SatellitesLocation
 {
     public class IssLocation : MonoBehaviour
     {
         [SerializeField] private Transform sun;
-        [SerializeField] private LatLonAltToUnity latLonAltToUnity;
+        [SerializeField] private LatLonAltToUnity.LatLonAltToUnity latLonAltToUnity;
         [SerializeField] private float updateInterval = 1.0f; // Time between API calls
         private string _issData;
 
