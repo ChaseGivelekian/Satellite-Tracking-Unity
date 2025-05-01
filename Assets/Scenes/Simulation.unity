@@ -551,6 +551,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Terra
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 77ea363a987c9f541a372066ff3658d5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1247934123278330814, guid: 77ea363a987c9f541a372066ff3658d5, type: 3}
       propertyPath: m_DirtyAABB
       value: 0
@@ -955,7 +959,7 @@ GameObject:
   m_Component:
   - component: {fileID: 527275020}
   - component: {fileID: 527275022}
-  - component: {fileID: 527275021}
+  - component: {fileID: 527275023}
   m_Layer: 0
   m_Name: Terra Camera
   m_TagString: Untagged
@@ -978,24 +982,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1245399548}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &527275021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 527275019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ed227c4091846458086be44e6a80d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  satelliteTransform: {fileID: 1416003215}
-  orbitSpeed: 100
-  initialDistance: 100
-  minZoomDistance: 25
-  maxZoomDistance: 150
-  zoomSpeed: 10
 --- !u!20 &527275022
 Camera:
   m_ObjectHideFlags: 0
@@ -1047,6 +1033,24 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &527275023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 527275019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e21711aa7f194744982136956d243165, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectTransform: {fileID: 1416003215}
+  orbitSpeed: 100
+  initialDistance: 100
+  minDistance: 25
+  maxDistance: 150
+  zoomSpeed: 10
 --- !u!1 &798706386 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4499123344997166499, guid: b2481f92eedc7104cabd6f26b6b308f2, type: 3}
@@ -1097,7 +1101,7 @@ GameObject:
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: Earth Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1189,9 +1193,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e21711aa7f194744982136956d243165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  earthTransform: {fileID: 1799222571}
-  initialDistance: 6607
+  objectTransform: {fileID: 1799222571}
   orbitSpeed: 100
+  initialDistance: 6607
+  minDistance: 4247.33
+  maxDistance: 9556.5
+  zoomSpeed: 318.55
 --- !u!1001 &1035269777
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1259,6 +1266,10 @@ PrefabInstance:
     - target: {fileID: 4499123344997166499, guid: b2481f92eedc7104cabd6f26b6b308f2, type: 3}
       propertyPath: m_Name
       value: Aqua
+      objectReference: {fileID: 0}
+    - target: {fileID: 4499123344997166499, guid: b2481f92eedc7104cabd6f26b6b308f2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1399,7 +1410,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1333447409}
   - component: {fileID: 1333447407}
-  - component: {fileID: 1333447408}
+  - component: {fileID: 1333447410}
   m_Layer: 0
   m_Name: Aqua Camera
   m_TagString: Untagged
@@ -1458,24 +1469,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &1333447408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1333447406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ed227c4091846458086be44e6a80d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  satelliteTransform: {fileID: 798706389}
-  orbitSpeed: 100
-  initialDistance: 100
-  minZoomDistance: 25
-  maxZoomDistance: 150
-  zoomSpeed: 10
 --- !u!4 &1333447409
 Transform:
   m_ObjectHideFlags: 0
@@ -1491,6 +1484,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1245399548}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1333447410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1333447406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e21711aa7f194744982136956d243165, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectTransform: {fileID: 798706389}
+  orbitSpeed: 100
+  initialDistance: 100
+  minDistance: 25
+  maxDistance: 150
+  zoomSpeed: 10
 --- !u!1001 &1372522968
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1559,6 +1570,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Landsat 7
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f06ae61857c107540a6425030c7d46b1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 65702495048144492, guid: f06ae61857c107540a6425030c7d46b1, type: 3}
@@ -1618,7 +1633,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1777156029}
   - component: {fileID: 1777156031}
-  - component: {fileID: 1777156030}
+  - component: {fileID: 1777156032}
   m_Layer: 0
   m_Name: Landsat 7 Camera
   m_TagString: Untagged
@@ -1641,24 +1656,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1245399548}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1777156030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1777156028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ed227c4091846458086be44e6a80d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  satelliteTransform: {fileID: 247489258}
-  orbitSpeed: 100
-  initialDistance: 100
-  minZoomDistance: 25
-  maxZoomDistance: 150
-  zoomSpeed: 10
 --- !u!20 &1777156031
 Camera:
   m_ObjectHideFlags: 0
@@ -1710,6 +1707,24 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &1777156032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777156028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e21711aa7f194744982136956d243165, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectTransform: {fileID: 247489258}
+  orbitSpeed: 100
+  initialDistance: 100
+  minDistance: 25
+  maxDistance: 150
+  zoomSpeed: 10
 --- !u!1 &1799222567
 GameObject:
   m_ObjectHideFlags: 0
@@ -1878,7 +1893,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1929337451}
   - component: {fileID: 1929337449}
-  - component: {fileID: 1929337452}
+  - component: {fileID: 1929337453}
   m_Layer: 0
   m_Name: ISS Camera
   m_TagString: Untagged
@@ -1952,7 +1967,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1245399548}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1929337452
+--- !u!114 &1929337453
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1961,14 +1976,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1929337448}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ed227c4091846458086be44e6a80d2, type: 3}
+  m_Script: {fileID: 11500000, guid: e21711aa7f194744982136956d243165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  satelliteTransform: {fileID: 1816644054}
+  objectTransform: {fileID: 1816644054}
   orbitSpeed: 100
   initialDistance: 100
-  minZoomDistance: 25
-  maxZoomDistance: 150
+  minDistance: 25
+  maxDistance: 150
   zoomSpeed: 10
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
