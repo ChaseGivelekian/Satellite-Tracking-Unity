@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace CameraController
 {
-    public class IssCameraController : MonoBehaviour
+    public class SatelliteCameraController : MonoBehaviour
     {
-        [Header("Target")] public Transform issTransform;
+        [Header("Target")] public Transform satelliteTransform;
 
         [Header("Orbit Settings")] public float orbitSpeed = 50f;
         public float initialDistance;
@@ -20,19 +20,9 @@ namespace CameraController
 
         private void Start()
         {
-            if (issTransform == null)
+            if (satelliteTransform == null)
             {
-                Debug.LogWarning("ISS transform not assigned to Camera Controller!");
-                // Try to find ISS in the scene
-                var issObj = GameObject.Find("ISS");
-                if (issObj != null)
-                    issTransform = issObj.transform;
-                else
-                {
-                    Debug.LogError("Could not find ISS object in scene!");
-                    enabled = false;
-                    return;
-                }
+                Debug.LogWarning("Transform not assigned to Camera Controller!");
             }
 
             // Set the initial distance
@@ -44,7 +34,7 @@ namespace CameraController
 
         private void Update()
         {
-            if (!issTransform)
+            if (!satelliteTransform)
                 return;
 
             // Check for mouse button press
@@ -66,16 +56,16 @@ namespace CameraController
                 var currentMousePosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
                 var mouseDelta = currentMousePosition - _lastMousePosition;
 
-                // Rotate the camera around the ISS based on mouse movement
-                transform.RotateAround(issTransform.position, transform.right,
+                // Rotate the camera around the satellite based on mouse movement
+                transform.RotateAround(satelliteTransform.position, transform.right,
                     -mouseDelta.y * orbitSpeed * Time.deltaTime);
-                transform.RotateAround(issTransform.position, Vector3.up,
+                transform.RotateAround(satelliteTransform.position, Vector3.up,
                     mouseDelta.x * orbitSpeed * Time.deltaTime);
 
                 _lastMousePosition = currentMousePosition;
 
                 // Store the current offset direction after rotation
-                _offsetDirection = (transform.position - issTransform.position).normalized;
+                _offsetDirection = (transform.position - satelliteTransform.position).normalized;
             }
 
             // Handle zooming with a scroll wheel
@@ -88,33 +78,34 @@ namespace CameraController
                 // Store the current offset direction if we haven't been orbiting
                 if (!_isOrbiting)
                 {
-                    _offsetDirection = (transform.position - issTransform.position).normalized;
+                    _offsetDirection = (transform.position - satelliteTransform.position).normalized;
                 }
             }
 
-            // Update camera position to follow the ISS as it moves
+            // Update camera position to follow the satellite as it moves
             UpdateCameraPosition();
         }
 
         private void UpdateCameraPosition()
         {
-            if (!issTransform) return;
+            if (!satelliteTransform) return;
 
             // If we don't have an offset direction yet, initialize it
             if (_offsetDirection == Vector3.zero)
             {
-                // Default to a position behind and slightly above the ISS
-                transform.position = issTransform.position - issTransform.forward * _currentDistance + Vector3.up * 2f;
-                _offsetDirection = (transform.position - issTransform.position).normalized;
+                // Default to a position behind and slightly above the satellite
+                transform.position = satelliteTransform.position - satelliteTransform.forward * _currentDistance +
+                                     Vector3.up * 2f;
+                _offsetDirection = (transform.position - satelliteTransform.position).normalized;
             }
             else
             {
                 // Position the camera based on the current offset direction and distance
-                transform.position = issTransform.position + _offsetDirection * _currentDistance;
+                transform.position = satelliteTransform.position + _offsetDirection * _currentDistance;
             }
 
-            // Always look at the ISS
-            transform.LookAt(issTransform);
+            // Always look at the satellite
+            transform.LookAt(satelliteTransform);
         }
     }
 }

@@ -1,17 +1,18 @@
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace SatellitesLocation.SatellitesLocation
+namespace SatellitesLocation.GetLocation
 {
     public class IssLocation : MonoBehaviour
     {
         [SerializeField] private Transform sun;
         [SerializeField] private LatLonAltToUnity.LatLonAltToUnity latLonAltToUnity;
-        [SerializeField] private float updateInterval = 1.0f; // Time between API calls
         private string _issData;
 
         [System.Serializable]
+        [SuppressMessage("ReSharper", "UnusedMember.Global")]
         public class IssData
         {
             public string name;
@@ -46,9 +47,10 @@ namespace SatellitesLocation.SatellitesLocation
             transform.LookAt(sun);
         }
 
+        [SuppressMessage("ReSharper", "IteratorNeverReturns")]
         private IEnumerator GetIssData()
         {
-            var waitTime = new WaitForSecondsRealtime(updateInterval);
+            var waitTime = new WaitForSecondsRealtime(1.0f);
 
             while (true)
             {
@@ -82,7 +84,7 @@ namespace SatellitesLocation.SatellitesLocation
             var longitude = issData.longitude;
             var altitude = issData.altitude;
 
-            latLonAltToUnity.IssToUnity(latitude, longitude, altitude);
+            latLonAltToUnity.SatelliteToUnity(latitude, longitude, altitude);
         }
     }
 }

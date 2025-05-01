@@ -66,17 +66,17 @@ namespace SatellitesLocation.LatLonAltToUnity
             _isMoving = false;
         }
 
-        public void IssToUnity(float latitude, float longitude, float altitude)
+        public void SatelliteToUnity(float latitude, float longitude, float altitude)
         {
             // Convert the coordinates to a Unity position
-            var issPosition = ConvertLatLonAltToUnityPosition(latitude, longitude, altitude);
+            var satellitePosition = ConvertLatLonAltToUnityPosition(latitude, longitude, altitude);
 
             if (_isFirstPosition)
             {
                 // For the first position, set it directly without interpolation
-                transform.position = issPosition;
-                _targetPosition = issPosition;
-                _startPosition = issPosition;
+                transform.position = satellitePosition;
+                _targetPosition = satellitePosition;
+                _startPosition = satellitePosition;
                 _isFirstPosition = false;
             }
             else
@@ -89,7 +89,7 @@ namespace SatellitesLocation.LatLonAltToUnity
 
                 // Start a new movement from current position to new target
                 _startPosition = transform.position;
-                _targetPosition = issPosition;
+                _targetPosition = satellitePosition;
                 _isMoving = true;
                 _moveCoroutine = StartCoroutine(MoveOverOneSecond(_startPosition, _targetPosition));
             }
