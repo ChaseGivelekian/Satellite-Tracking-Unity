@@ -1334,6 +1334,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ISS
       objectReference: {fileID: 0}
+    - target: {fileID: 8771091787928289351, guid: b686f129e2fd5dd4593eb5a67974633e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

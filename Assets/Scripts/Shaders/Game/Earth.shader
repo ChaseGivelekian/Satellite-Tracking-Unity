@@ -27,7 +27,7 @@
 
         CGPROGRAM
         // Physically based Standard lighting model, and enable shadows on all light types
-        #pragma surface surf Standard fullforwardshadows
+        #pragma surface surf Standard fullforwardshadows vertex:vert
 
         // Use shader model 3.0 target, to get nicer looking lighting
         #pragma target 3.0
@@ -48,6 +48,7 @@
             float2 uv_BumpMap;
             float3 worldNormal;
             float3 viewDir;
+            float3 objNormal; // Added for equirectangular mapping
             INTERNAL_DATA // Required for WorldReflectionVector to work with normal maps
         };
 
@@ -56,6 +57,25 @@
         fixed4 _Color;
         float _EmissionStrength;
         float _TransitionSharpness;
+
+        #define PI 3.141592653589793
+
+        // Function to convert 3D normal to equirectangular UV coordinates
+        inline float2 RadialCoords(float3 a_coords)
+        {
+            float3 a_coords_n = normalize(a_coords);
+            float lon = atan2(a_coords_n.z, a_coords_n.x);
+            float lat = acos(a_coords_n.y);
+            float2 sphereCoords = float2(lon, lat) * (1.0 / PI);
+            return float2(sphereCoords.x * 0.5 + 0.5, 1 - sphereCoords.y);
+        }
+
+        // Add vertex function to pass the object normal to the fragment shader
+        void vert(inout appdata_full v, out Input o)
+        {
+            UNITY_INITIALIZE_OUTPUT(Input, o);
+            o.objNormal = v.normal;
+        }
 
         // Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
         // See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
@@ -69,18 +89,21 @@
             // Get normalized direction to the light source
             float3 dirToSun = normalize(_WorldSpaceLightPos0.xyz);
 
-            // Sample base textures first
-            fixed4 dayColor = tex2D(_DayTex, IN.uv_DayTex) * _Color;
-            fixed4 nightColor = tex2D(_NightTex, IN.uv_DayTex) * _Color;
+            // Calculate equirectangular UV coordinates based on the object normal
+            float2 equiUV = RadialCoords(IN.objNormal);
 
-            // Sample cloud texture with animation
-            float2 cloudUV = IN.uv_DayTex;
+            // Sample textures with equirectangular mapping
+            fixed4 dayColor = tex2D(_DayTex, equiUV) * _Color;
+            fixed4 nightColor = tex2D(_NightTex, equiUV) * _Color;
+
+            // Sample cloud texture with animation and equirectangular mapping
+            float2 cloudUV = equiUV;
             cloudUV.x = frac(cloudUV.x + _Time.y * _CloudSpeed); // Animate clouds horizontally with wrapping
             fixed4 cloudColor = tex2D(_CloudTex, cloudUV);
 
-            // Sample both normal maps
-            fixed3 landNormal = UnpackNormal(tex2D(_BumpMap, IN.uv_BumpMap));
-            fixed3 oceanNormal = UnpackNormal(tex2D(_OceanBumpMap, IN.uv_BumpMap));
+            // Sample both normal maps with equirectangular mapping
+            fixed3 landNormal = UnpackNormal(tex2D(_BumpMap, equiUV));
+            fixed3 oceanNormal = UnpackNormal(tex2D(_OceanBumpMap, equiUV));
 
             // Apply scales to the normal maps
             landNormal.xy *= _BumpScale;
