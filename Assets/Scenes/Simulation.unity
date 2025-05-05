@@ -553,7 +553,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 77ea363a987c9f541a372066ff3658d5, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1247934123278330814, guid: 77ea363a987c9f541a372066ff3658d5, type: 3}
       propertyPath: m_DirtyAABB
@@ -1046,7 +1046,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectTransform: {fileID: 1416003215}
-  orbitSpeed: 100
+  orbitSpeed: 20
   initialDistance: 100
   minDistance: 25
   maxDistance: 150
@@ -1194,7 +1194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectTransform: {fileID: 1799222571}
-  orbitSpeed: 100
+  orbitSpeed: 20
   initialDistance: 6607
   minDistance: 4247.33
   maxDistance: 9556.5
@@ -1269,7 +1269,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4499123344997166499, guid: b2481f92eedc7104cabd6f26b6b308f2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1336,7 +1336,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8771091787928289351, guid: b686f129e2fd5dd4593eb5a67974633e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1501,7 +1501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectTransform: {fileID: 798706389}
-  orbitSpeed: 100
+  orbitSpeed: 20
   initialDistance: 100
   minDistance: 25
   maxDistance: 150
@@ -1576,7 +1576,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f06ae61857c107540a6425030c7d46b1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -1724,7 +1724,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectTransform: {fileID: 247489258}
-  orbitSpeed: 100
+  orbitSpeed: 20
   initialDistance: 100
   minDistance: 25
   maxDistance: 150
@@ -1984,7 +1984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectTransform: {fileID: 1816644054}
-  orbitSpeed: 100
+  orbitSpeed: 20
   initialDistance: 100
   minDistance: 25
   maxDistance: 150
