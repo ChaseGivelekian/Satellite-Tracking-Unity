@@ -157,19 +157,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 77ea363a987c9f541a372066ff3658d5, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 77ea363a987c9f541a372066ff3658d5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 77ea363a987c9f541a372066ff3658d5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 77ea363a987c9f541a372066ff3658d5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 77ea363a987c9f541a372066ff3658d5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -553,7 +553,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 77ea363a987c9f541a372066ff3658d5, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1247934123278330814, guid: 77ea363a987c9f541a372066ff3658d5, type: 3}
       propertyPath: m_DirtyAABB
@@ -966,7 +966,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &527275020
 Transform:
   m_ObjectHideFlags: 0
@@ -1042,14 +1042,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 527275019}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e21711aa7f194744982136956d243165, type: 3}
+  m_Script: {fileID: 11500000, guid: c34c4ec2bfc1440ea967caef0d317d62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectTransform: {fileID: 1416003215}
+  satelliteTransform: {fileID: 1416003215}
   orbitSpeed: 20
   initialDistance: 100
-  minDistance: 25
-  maxDistance: 150
+  minZoomDistance: 25
+  maxZoomDistance: 150
   zoomSpeed: 10
 --- !u!1 &798706386 stripped
 GameObject:
@@ -1382,8 +1382,8 @@ MonoBehaviour:
   - {fileID: 963194227}
   - {fileID: 1929337449}
   - {fileID: 1333447407}
-  - {fileID: 527275022}
   - {fileID: 1777156031}
+  - {fileID: 527275022}
 --- !u!4 &1245399548
 Transform:
   m_ObjectHideFlags: 0
@@ -1400,8 +1400,8 @@ Transform:
   - {fileID: 963194228}
   - {fileID: 1929337451}
   - {fileID: 1333447409}
-  - {fileID: 527275020}
   - {fileID: 1777156029}
+  - {fileID: 527275020}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1333447406
@@ -1497,14 +1497,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1333447406}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e21711aa7f194744982136956d243165, type: 3}
+  m_Script: {fileID: 11500000, guid: c34c4ec2bfc1440ea967caef0d317d62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectTransform: {fileID: 798706389}
+  satelliteTransform: {fileID: 798706389}
   orbitSpeed: 20
   initialDistance: 100
-  minDistance: 25
-  maxDistance: 150
+  minZoomDistance: 25
+  maxZoomDistance: 150
   zoomSpeed: 10
 --- !u!1001 &1372522968
 PrefabInstance:
@@ -1720,14 +1720,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1777156028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e21711aa7f194744982136956d243165, type: 3}
+  m_Script: {fileID: 11500000, guid: c34c4ec2bfc1440ea967caef0d317d62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectTransform: {fileID: 247489258}
+  satelliteTransform: {fileID: 247489258}
   orbitSpeed: 20
   initialDistance: 100
-  minDistance: 25
-  maxDistance: 150
+  minZoomDistance: 25
+  maxZoomDistance: 150
   zoomSpeed: 10
 --- !u!1 &1799222567
 GameObject:
@@ -1897,7 +1897,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1929337451}
   - component: {fileID: 1929337449}
-  - component: {fileID: 1929337453}
+  - component: {fileID: 1929337454}
   m_Layer: 0
   m_Name: ISS Camera
   m_TagString: Untagged
@@ -1971,7 +1971,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1245399548}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1929337453
+--- !u!114 &1929337454
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1980,14 +1980,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1929337448}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e21711aa7f194744982136956d243165, type: 3}
+  m_Script: {fileID: 11500000, guid: c34c4ec2bfc1440ea967caef0d317d62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectTransform: {fileID: 1816644054}
+  satelliteTransform: {fileID: 1816644054}
   orbitSpeed: 20
   initialDistance: 100
-  minDistance: 25
-  maxDistance: 150
+  minZoomDistance: 25
+  maxZoomDistance: 150
   zoomSpeed: 10
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

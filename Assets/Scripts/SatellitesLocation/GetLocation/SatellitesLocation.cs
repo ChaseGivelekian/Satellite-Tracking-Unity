@@ -79,6 +79,8 @@ namespace SatellitesLocation.GetLocation
                     }
                 }
 
+                Debug.Log(transactionCount);
+
                 yield return waitTime;
             } while (transactionCount < 1000);
         }
