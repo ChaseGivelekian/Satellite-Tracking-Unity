@@ -8,6 +8,9 @@ This repository contains a Unity project that uses public APIs to track satellit
 - Semi-realistic Earth model using imagery from [NASA](https://visibleearth.nasa.gov/collection/1484/blue-marble) and [Michael Englyst](https://maps.drsys.eu/).
 - Satellite visualization using 3D models and textures from [NASA](https://nasa3d.arc.nasa.gov/models).
 
+# Demo
+![](Satellite_Tracking_Demo.gif)
+
 ## Limitations
 - The project is mainly limited regarding the rate limit from the [N2YO](https://www.n2yo.com/api/) API.
 
